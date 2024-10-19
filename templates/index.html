@@ -8,16 +8,17 @@
         body {
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
             overflow: hidden; /* 画像がはみ出さないようにする */
+            background-color: #f0f0f0;
         }
         button {
             padding: 10px 20px;
-            font-size: 18px;
+            font-size: 34px;
             background-color: #4CAF50;
             color: white;
             border: none;
@@ -27,16 +28,13 @@
         button:disabled {
             background-color: grey;
         }
-        #status {
-            margin: 20px 0;
-            font-size: 18px;
-            color: #333;
-        }
+       
         .progress-container {
             width: 100%;
-            background-color: #ddd;
+            background-color: #b50c0c;
             border-radius: 5px;
             overflow: hidden;
+            margin-bottom: 10px; /* 各プログレスバーの間にマージンを追加 */
         }
         .progress-bar {
             height: 30px;
@@ -44,33 +42,43 @@
             background-color: #4CAF50;
             text-align: center;
             color: white;
+            line-clamp: center;
             line-height: 30px; /* テキストを中央に表示 */
         }
+        
+        #progressBar1 {
+            left:25%;
+        }  
 
-        /* 「旧サーバー」*/
-        #oldServerLabel {
-            position: absolute;
-            font-size: 18px;
-            background-color: #ddd;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            top: 50%;
-            left: calc(25% - 50px);
-            transform: translateY(-150%);
+        #progressBar2 {
+            left:75%;
         }
 
-        /* 「新サーバー」*/
-        #newServerLabel {
+        .server-label {
+            padding: 4px 9px;
             position: absolute;
             font-size: 18px;
             background-color: #ddd;
             border: none;
             border-radius: 5px;
-            cursor: pointer;
-            top: 50%;
-            right: calc(25% - 50px);
-            transform: translateY(-150%);
+            bottom: 20%;
+            transform: translateY(150%);
+        }
+
+        #oldServerLabel_old {
+            left: calc(25% - 200px);
+        }
+
+        #oldServerLabel_new {
+            right: calc(25% + 200px);
+        }
+
+        #newServerLabel_old {
+            left: calc(25% + 200px);
+        }
+
+        #newServerLabel_new {
+            right: calc(25% - 200px);
         }
 
         /* 挿入画像の初期状態 */
@@ -79,122 +87,215 @@
            image3...box.png
            image4...manybox.png
          */
-        #image1, #image2, #image3, #image4 {
-            width: 200px;
+        #image1, #image2, #image3, #image4, 
+        #image5, #image6, #image7, #image8{
+            width: 160px;
             display: none;
             position: absolute;
         }
 
         /* 大きい段ボール画像を左に配置 */
         #image1 {
-            top: 60%;
-            left: calc(25% - 100px);
+            top: 55%;
+            left: calc(25% - 220px);
         }
 
         /* 車画像を動かす位置（初期は左に配置） */
         #image2 {
             top: 65%;
-            left: calc(25% - 100px); /* 初期位置はimage1と同じ */
+            left: calc(25% - 220px); /* 初期位置はimage1と同じ */
         }
 
         /* 小さい段ボール画像を右に配置 */
         #image3 {
-            top: 60%;
-            right: calc(25% - 100px);
+            top: 55%;
+            left: calc(25% + 160px);
         }
 
         /* 大きい段ボール画像を右に配置 */
         #image4 {
-            top: 60%;
-            right: calc(25% - 100px);
+            top: 55%;
+            left: calc(25% + 160px);
+        }
+
+        /* 大きい段ボール画像を左に配置 */
+        #image5 {
+            top: 55%;
+            right: calc(25% + 160px);
+        }
+
+        /* 車画像を動かす位置（初期は左に配置） */
+        #image6 {
+            top: 65%;
+            right: calc(25% + 160px); /* 初期位置はimage1と同じ */
+        }
+
+        /* 小さい段ボール画像を右に配置 */
+        #image7 {
+            top: 55%;
+            right: calc(25% - 220px);
+        }
+
+        /* 大きい段ボール画像を右に配置 */
+        #image8 {
+            top: 55%;
+            right: calc(25% - 200px);
         }
 
         /* アニメーション */
-        @keyframes moveCar {
+        @keyframes moveCar1 {
             0% {
-                left: 25%; /* image1の位置 */
+                left: calc(25% - 220px); /* 初期位置はimage1と同じ */
             }
             100% {
-                left: calc(75% - 200px); /* image3の位置 */
+                left: calc(25% + 5px); /* image3の位置 */
+            }
+        }
+
+        /* アニメーション */
+        @keyframes moveCar2 {
+            0% {
+                right: calc(45% - 160px);
+            }
+            100% {
+                right: calc(25% - 85px); /* image3の位置 */
             }
         }
 
         /* アニメーションを適用 */
-        .move {
-            animation: moveCar 3s linear infinite; /* 3秒で左から右に移動し続ける */
+        .move1 {
+            animation: moveCar1 1.8s linear infinite; /* 3秒で左から右に移動し続ける */
         }
+
+        /* アニメーションを適用 */
+        .move2 {
+            animation: moveCar2 3s linear infinite; /* 3秒で左から右に移動し続ける */
+        }
+
     </style>
 </head>
 <body>
     <!-- 旧サーバーのラベル -->
-    <div id="oldServerLabel" class="server-label">旧サーバー</div>
+    <div id="oldServerLabel_old" class="server-label">a古サーバ</div>
     <!-- 新サーバーのラベル -->
-    <div id="newServerLabel" class="server-label">新サーバー</div>
-
-    <!-- 左の段ボール画像：ボタンを押す前から表示 -->
-    <img id="image1" src="images/manybox.png" alt="Image 1">
+    <div id="newServerLabel_old" class="server-label">a新サーバ</div>
+    <!-- 旧サーバーのラベル -->
+    <div id="oldServerLabel_new" class="server-label">b古サーバ</div>
+    <!-- 新サーバーのラベル -->
+    <div id="newServerLabel_new" class="server-label">b新サーバ</div>
 
     <div>
-        <button onclick="startMigration()" id="migrationButton">データ移行開始</button> 
-        <div style="text-align:center" id="status">Let's start👊😼🤜</div>
+        <button onclick="startMigration()">データ移行開始</button> 
+        <!-- <div style="text-align:center" id="status"></div> -->
+
         <div class="progress-container">
-            <div class="progress-bar" id="progressBar">0.0%</div>
+            <div class="progress-bar" id="progressBar1">0.0%</div>
+            <!-- <div id="progressText1">0.0%</div>プログレスバー1の進捗状況 -->
         </div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar2">0.0%</div>
+            <!-- <div id="progressText2">0.0%</div> プログレスバー2の進捗状況 -->
+        </div>
+
+        <!-- 左の段ボール画像：ボタンを押す前から表示 -->
+        <img id="image1" src="images/manybox.png" alt="Image 1">
+        <img id="image5" src="images/manybox.png" alt="Image 5">
+
+        <!-- 車画像：ボタンを押した後、移行中に表示 -->
+        <img id="image2" src="images/car.png" alt="Image 2">
+        
+        <!-- 右の段ボール画像(小→大)：ボタンを押した後からずっと表示 -->
+        <img id="image3" src="images/box.png" alt="Image 3">
+        <img id="image4" src="images/manybox.png" alt="Image 4">
+
+
+        <!-- 車画像：ボタンを押した後、移行中に表示 -->
+        <img id="image6" src="images/car.png" alt="Image 6">
+        
+        <!-- 右の段ボール画像(小→大)：ボタンを押した後からずっと表示 -->
+        <img id="image7" src="images/box.png" alt="Image 7">
+        <img id="image8" src="images/manybox.png" alt="Image 8">
     </div>
-
-    <!-- 車画像：ボタンを押した後、移行中に表示 -->
-    <img id="image2" src="images/car.png" alt="Image 2">
-    
-    <!-- 右の段ボール画像(小→大)：ボタンを押した後からずっと表示 -->
-    <img id="image3" src="images/box.png" alt="Image 3">
-    <img id="image4" src="images/manybox.png" alt="Image 4">
-
 
     <script>
         // ページが読み込まれたときに左段ボール画像を表示
         window.onload = function() {
             document.getElementById('image1').style.display = 'block';
+            document.getElementById('image5').style.display = 'block';
         };
 
         // ↑のdivタグにおいて,ボタンクリック時にstartMigration()を実行, idはjavascriptsからこのボタンを特定するための演算子
         function startMigration() {
             // ボタンをクリックすると、statusとmigrationButtonの要素を取得する
-            const button = document.getElementById('migrationButton'); // ボタンを取得divを探索 (指定したIDにマッチするドキュメント要素を取得)
-            const migratingPercent = document.getElementById('status'); // ステータス表示用の要素を取得
-            const progressBar = document.getElementById('progressBar'); // プログレスバーの要素を取得
+            const button = document.getElementsByTagName('button')[0]; // ボタンを取得divを探索 (指定したIDにマッチするドキュメント要素を取得)
+            // const button1 = document.getElementsByClassName('migration'); // ボタンを取得divを探索 (指定したIDにマッチするドキュメント要素を取得)
+            // const button2 = document.getElementsByClassName('migration'); // ボタンを取得divを探索 (指定したIDにマッチするドキュメント要素を取得)
+
+            const progressBar1 = document.getElementById('progressBar1'); // プログレスバーの要素を取得
+            const progressBar2 = document.getElementById("progressBar2");
+            // const fasterProgress = document.getElementById("fasterProgress");
+
             const image1 = document.getElementById('image1');
             const image2 = document.getElementById('image2');
             const image3 = document.getElementById('image3');
             const image4 = document.getElementById('image4');
+            const image5 = document.getElementById('image5');
+            const image6 = document.getElementById('image6');
+            const image7 = document.getElementById('image7');
+            const image8 = document.getElementById('image8');
 
             // クリック直後の処理
             image2.style.display = 'block'; // 車画像表示
             image3.style.display = 'block'; // 右小段ボール表示
-            image2.classList.add('move'); // 車の画像を動かす
+            image2.classList.add('move1'); // 車の画像を動かす
             button.textContent = 'データ移行中';
+
             button.disabled = true;
+
+            image6.style.display = 'block'; // 車画像表示
+            image7.style.display = 'block'; // 右小段ボール表示
+            image6.classList.add('move2'); // 車の画像を動かす
+
 
             //// 進捗状況を更新する処理 ////
             // 変数の初期化
-            const wholePercentNum = 600; // 600回の更新で100%になる. 計算用の対象となるデータ全体から算出した全体値の変数
-            const updateInterval = 50; // 0.05秒ごとに更新
-            let currentNum = 0; // 現在の処理回数を表す。そのため、後の関数内でインクリメントされる
+            const wholePercentNum1 = 600; // 600回の更新で100%になる. 計算用の対象となるデータ全体から算出した全体値の変数
+            const updateInterval1 = 50; // 0.05秒ごとに更新
+            let currentNum1 = 0; // 現在の処理回数を表す。そのため、後の関数内でインクリメントされる
+
+            const wholePercentNum2 = 800;
+            const updateInterval2 = 60;
+            let currentNum2 = 0;
+
+            // 進捗を比較する関数
+            // function compareProgress() {
+            //     const percent1 = (currentNum1 / wholePercentNum1) * 100;
+            //     const percent2 = (currentNum2 / wholePercentNum2) * 100;
+
+            //     if (percent1 > percent2) {
+            //         fasterProgress.textContent = "プログレスバー1が速い";
+            //     } else if (percent2 > percent1) {
+            //         fasterProgress.textContent = "プログレスバー2が速い";
+            //     } else {
+            //         fasterProgress.textContent = "両方とも同じ速度";
+            //     }
+            // }
 
             // データ移行の割合を計算して表示させる関数
-            function updateProgress() {
-                if (currentNum < wholePercentNum) {
-                    currentNum++;
-                    let currentPercent = (currentNum / wholePercentNum) * 100; // 現在の処理状況をパーセントで表すための変数
-                    migratingPercent.textContent = `${currentPercent.toFixed(1)}%`; // 小数点1位まで表示
-                    progressBar.style.width = `${currentPercent}%`; // プログレスバーの幅を更新
-                    progressBar.textContent = `${currentPercent.toFixed(1)}%`; // プログレスバーのテキストを更新(小数点第一位まで表示
-                    setTimeout(updateProgress, updateInterval);  // 再帰呼び出し, 0.05秒後に再度実行
+            function updateProgress1() {
+                if (currentNum1 < wholePercentNum1) {
+                    currentNum1++;
+
+                    let currentPercent1 = (currentNum1 / wholePercentNum1) * 100; // 現在の処理状況をパーセントで表すための変数
+
+                    progressBar1.style.width = `${currentPercent1}%`; // プログレスバーの幅を更新
+                    progressBar1.textContent = `${currentPercent1.toFixed(1)}%`; // プログレスバーのテキストを更新(小数点第一位まで表示
+                
+                    setTimeout(updateProgress1, updateInterval1);  // 再帰呼び出し, 0.05秒後に再度実行
                 } else {
-                    migratingPercent.textContent = "100.0%";  // 100%に設定
-                    progressBar.style.width = '100%'; // プログレスバーを100%にする
-                    progressBar.textContent = "100.0%"; // プログレスバーのテキストを100.0%に（無くても良いかも？）
+                    progressBar1.style.width = '100%'; // プログレスバーを100%にする
+                    progressBar1.textContent = "100.0%"; // プログレスバーのテキストを100.0%に（無くても良いかも？）
                     button.textContent = "データ移行完了"; // 完了テキストを画面に描画
-                    // button.disabled = false; // ボタンを再度有効化
 
                     // アニメーション終了時の処理
                     image1.style.display = 'none'; // 左段ボール画像削除
@@ -203,8 +304,40 @@
                     image4.style.display = 'block'; // 右大段ボール画像表示
                 }
             }
+            
+            // データ移行の割合を計算して表示させる関数
+            function updateProgress2() {
+                if (currentNum2 < wholePercentNum2) {
+                    currentNum2++;
 
-            updateProgress(); // 最初の実行
+                    let currentPercent2 = (currentNum2 / wholePercentNum2) * 100; // 現在の処理状況をパーセントで表すための変数
+        
+                    progressBar2.style.width = `${currentPercent2}%`; // プログレスバーの幅を更新
+                    progressBar2.textContent = `${currentPercent2.toFixed(1)}%`; // プログレスバーのテキストを更新(小数点第一位まで表示
+
+                    setTimeout(updateProgress2, updateInterval2);  // 再帰呼び出し, 0.05秒後に再度実行
+                } else {
+                    progressBar2.style.width = '100%'; // プログレスバーを100%にする
+                    progressBar2.textContent = "100.0%"; // プログレスバーのテキストを100.0%に（無くても良いかも？）
+                    button.textContent = "データ移行完了"; // 完了テキストを画面に描画
+
+                    // アニメーション終了時の処理
+                    image5.style.display = 'none'; // 左段ボール画像削除
+                    image6.style.display = 'none'; // 車画像削除
+                    image7.style.display = 'none';// 右小段ボール画像削除
+                    image8.style.display = 'block'; // 右大段ボール画像表示
+                }
+            }
+
+            // function finish_text(){
+            //     if (button1.textContent === button2.textContent) {
+            //         button.textContent = "データ移行完了";
+            //     }
+            // }
+
+            updateProgress1(); // 最初の実行
+            updateProgress2(); // 最初の実行
+            // finish_text();
         }
     </script>
 
